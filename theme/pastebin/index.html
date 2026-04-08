@@ -253,7 +253,7 @@
             <div class="d-flex flex-wrap gap-2 mb-2">
               <button class="btn btn-sm btn-outline-success flex-grow-1" onclick="loadUrlList()"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</button>
               <button class="btn btn-sm btn-outline-info flex-grow-1" onclick="loadKV()"><i class="bi bi-cloud-download me-1"></i>Sync</button>
-              <button class="btn btn-sm btn-outline-danger flex-grow-1" onclick="clearLocalStorage()"><i class="bi bi-trash3 me-1"></i>Clear</button>
+              <button class="btn btn-sm btn-outline-danger flex-grow-1" onclick="if(confirm('Are you sure you want to clear all local history?')) { clearLocalStorage(); loadUrlList(); }"><i class="bi bi-trash3 me-1"></i>Clear</button>
             </div>
             <div id="urlList" class="flex-grow-1"></div>
           </div>
@@ -340,6 +340,7 @@
         // Stats Button
         let qryCntBtn = document.createElement('button');
         qryCntBtn.setAttribute('type', 'button');
+        qryCntBtn.setAttribute('id', 'qryCntBtn-' + shortUrl); 
         qryCntBtn.className = 'btn btn-info list-action-btn';
         qryCntBtn.title = 'Stats';
         qryCntBtn.setAttribute('onclick', 'queryVisitCount(\"' + shortUrl + '\")');
@@ -348,6 +349,7 @@
         // QR Code Button
         let qrcodeBtn = document.createElement('button');
         qrcodeBtn.setAttribute('type', 'button');
+        qrcodeBtn.setAttribute('id', 'qrcodeBtn-' + shortUrl); 
         qrcodeBtn.className = 'btn btn-info list-action-btn';
         qrcodeBtn.title = 'QR Code';
         qrcodeBtn.setAttribute('onclick', 'buildQrcode(\"' + shortUrl + '\")');
@@ -356,9 +358,15 @@
         // Delete Button
         let delBtn = document.createElement('button');
         delBtn.setAttribute('type', 'button');
+        delBtn.setAttribute('id', 'delBtn-' + shortUrl); 
         delBtn.className = 'btn btn-danger list-action-btn';
         delBtn.title = 'Delete';
-        delBtn.setAttribute('onclick', 'deleteShortUrl(\"' + shortUrl + '\")');
+        delBtn.onclick = function(e) {
+          e.stopPropagation();
+          if (confirm('Are you sure you want to delete this item? \n\nAlias: ' + shortUrl)) {
+            deleteShortUrl(shortUrl);
+          }
+        };
         delBtn.innerHTML = '<i class="bi bi-trash3"></i>';
         
         // Append all buttons
