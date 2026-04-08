@@ -1,394 +1,464 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 
 <head>
-  <meta http-equiv="content-type" content="txt/html; charset=utf-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>RoyalPaste - Premium Bin</title>
-  
-  <!-- Bootstrap & Icons -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='4' y1='2' x2='20' y2='22'%3E%3Cstop offset='0%25' stop-color='%23d4af37'/%3E%3Cstop offset='100%25' stop-color='%23f9df9f'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M8 4V3C8 2.44772 8.44772 2 9 2H15C15.5523 2 16 2.44772 16 3V4' stroke='url(%23g)' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M4 6C4 4.89543 4.89543 4 6 4H18C19.1046 4 20 4.89543 20 6V20C20 21.1046 19.1046 22 18 22H6C4.89543 22 4 21.1046 4 20V6Z' stroke='url(%23g)' stroke-width='2' fill='none'/%3E%3Cpath d='M9 10H15M9 14H15M9 18H12' stroke='%23ab47bc' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <title>RoyalPaste · Premium Pastebin</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
   <style>
-    /* ========== Royal Mac Design Tokens (紫金风格) ========== */
     :root {
-      /* Light Theme */
-      --bg-color: #f7f5fa;
-      --card-bg: rgba(255, 255, 255, 0.85);
-      --card-border: rgba(106, 27, 154, 0.15);
-      --card-shadow: 0 10px 30px -10px rgba(106, 27, 154, 0.1);
-      --text-main: #2c1a3d;
-      --text-muted: #6b5c7a;
-      --input-bg: rgba(255, 255, 255, 0.9);
-      --input-border: rgba(106, 27, 154, 0.2);
-      --input-text: #2c1a3d;
-      --gold-accent: linear-gradient(135deg, #b8860b, #d4af37);
-      --purple-accent: #6a1b9a;
-      --mac-header-bg: #f0ebf5;
-      --list-item-bg: rgba(255, 255, 255, 0.6);
+      --bg-gradient: radial-gradient(circle at 20% 20%, #1f0a2e 0%, #0a0312 100%);
+      --card-bg: rgba(18, 8, 28, 0.75);
+      --card-border: rgba(212, 175, 55, 0.3);
+      --card-shadow: 0 16px 32px -8px #000000b0, 0 0 0 1px rgba(212, 175, 55, 0.15) inset;
+      --text-main: #ede2ff;
+      --text-muted: #b9a6d4;
+      --input-bg: rgba(8, 2, 16, 0.8);
+      --input-border: rgba(212, 175, 55, 0.45);
+      --input-text: #f3eaff;
+      --gold-accent: linear-gradient(145deg, #c9a227, #f5d97a);
+      --purple-accent: #9c27b0;
+      --mac-header-bg: rgba(14, 5, 24, 0.95);
+      --list-item-bg: rgba(25, 12, 38, 0.7);
+      --glow-gold: rgba(212, 175, 55, 0.5);
     }
 
-    [data-theme="dark"] {
-      /* Dark Theme */
-      --bg-color: #12091c;
-      --card-bg: rgba(35, 20, 50, 0.7);
-      --card-border: rgba(212, 175, 55, 0.2);
-      --card-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.6);
-      --text-main: #f0e6fa;
-      --text-muted: #b0a3c2;
-      --input-bg: rgba(15, 8, 25, 0.6);
-      --input-border: rgba(212, 175, 55, 0.3);
-      --input-text: #e6e0f0;
-      --gold-accent: linear-gradient(135deg, #d4af37, #f9df9f);
+    [data-theme="light"] {
+      --bg-gradient: radial-gradient(circle at 20% 20%, #e8daf5 0%, #d6c0ec 100%);
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --card-border: rgba(139, 0, 200, 0.25);
+      --card-shadow: 0 16px 30px -8px rgba(106, 27, 154, 0.25), 0 0 0 1px rgba(212, 175, 55, 0.2) inset;
+      --text-main: #170a24;
+      --text-muted: #4e3a64;
+      --input-bg: rgba(255, 255, 255, 0.95);
+      --input-border: rgba(156, 39, 176, 0.35);
+      --input-text: #1c0b2b;
+      --gold-accent: linear-gradient(145deg, #b8860b, #e6c35c);
       --purple-accent: #8e24aa;
-      --mac-header-bg: rgba(25, 15, 35, 0.9);
-      --list-item-bg: rgba(20, 10, 30, 0.5);
+      --mac-header-bg: #ece0f5;
+      --list-item-bg: rgba(255, 255, 255, 0.65);
+      --glow-gold: rgba(184, 134, 11, 0.3);
     }
 
+    * { transition: background-color 0.3s ease, border-color 0.2s; }
     body {
-      background-color: var(--bg-color);
+      background: var(--bg-gradient);
       color: var(--text-main);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      transition: background-color 0.4s ease, color 0.4s ease;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      font-weight: 450;
+      -webkit-font-smoothing: antialiased;
+      margin: 0;
+      padding: 0;
+      letter-spacing: -0.01em;
     }
 
-    /* Subtle background glow effect */
-    body::before {
-      content: '';
+    .container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0.6rem 1rem 0.2rem !important;
+      max-width: 1400px;
+    }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.6rem;
+      padding: 0 0.25rem;
+    }
+    .logo-area { display: flex; align-items: center; gap: 10px; }
+    .logo-svg { width: 34px; height: 34px; filter: drop-shadow(0 4px 6px #d4af3740); }
+    .app-title {
+      font-weight: 700;
+      font-size: 1.7rem;
+      letter-spacing: -0.02em;
+      background: var(--gold-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .theme-switch {
       position: fixed;
-      top: -10%; left: -10%; width: 120%; height: 120%;
-      background: radial-gradient(circle at 50% 30%, rgba(106, 27, 154, 0.08) 0%, transparent 60%),
-                  radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
-      z-index: -1;
-      pointer-events: none;
+      top: 1rem; right: 1.2rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      color: #d4af37;
+      border-radius: 40px;
+      width: 42px; height: 42px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 6px 14px #00000030;
+      transition: 0.2s;
     }
+    .theme-switch:hover { transform: scale(1.08); box-shadow: 0 0 22px var(--glow-gold); }
 
-    /* ========== Mac Window Card Style ========== */
     .mac-card {
       background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
       border: 1px solid var(--card-border);
-      border-radius: 12px;
+      border-radius: 18px;
       box-shadow: var(--card-shadow);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.3s;
     }
+    .mac-card:hover {
+      box-shadow: 0 22px 38px -10px #000000cc, 0 0 0 1.5px var(--glow-gold) inset;
+      transform: translateY(-2px);
+    }
+
     .mac-card-header {
       background: var(--mac-header-bg);
       border-bottom: 1px solid var(--card-border);
-      padding: 0.75rem 1rem;
+      padding: 0.5rem 1.2rem;
       display: flex;
       align-items: center;
       font-weight: 600;
       font-size: 0.9rem;
       color: var(--text-main);
     }
-    /* Mac Traffic Lights */
-    .mac-dots {
-      display: flex;
-      gap: 6px;
-      margin-right: 15px;
-    }
-    .mac-dots span {
-      width: 12px; height: 12px;
-      border-radius: 50%;
-      display: inline-block;
-    }
-    .mac-dots span:nth-child(1) { background-color: #ff5f56; }
-    .mac-dots span:nth-child(2) { background-color: #ffbd2e; }
-    .mac-dots span:nth-child(3) { background-color: #27c93f; }
+    .mac-dots { display: flex; gap: 7px; margin-right: 15px; }
+    .mac-dots span { width: 11px; height: 11px; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+    .mac-dots span:nth-child(1) { background: #ff5f56; }
+    .mac-dots span:nth-child(2) { background: #ffbd2e; }
+    .mac-dots span:nth-child(3) { background: #27c93f; }
 
-    /* ========== Input & Textarea Adjustments ========== */
-    .form-control, .input-group-text, .form-control[readonly] {
-      background-color: var(--input-bg) !important;
+    /* 输入组一体化圆角 */
+    .input-group {
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .input-group-text,
+    .input-group .form-control,
+    .input-group .btn {
+      border-radius: 0 !important;
       border: 1px solid var(--input-border);
+    }
+    .input-group-text {
+      background: rgba(100, 30, 140, 0.08) !important;
+      border-right: none !important;
+      color: var(--text-muted) !important;
+    }
+    .input-group .form-control {
+      background: var(--input-bg) !important;
       color: var(--input-text) !important;
-      transition: all 0.3s;
+      border-left: none !important;
+      border-right: none !important;
+    }
+    .input-group .btn {
+      border-left: none !important;
     }
     .form-control:focus {
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25) !important;
       border-color: #d4af37 !important;
-      box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25) !important;
     }
-    .input-group-text { color: var(--text-muted) !important; font-weight: 500; border-right: none;}
-    .input-group > .form-control { border-left: 1px solid var(--input-border); }
-    
-    /* ========== Golden Buttons ========== */
+
     .btn-gold {
       background: var(--gold-accent);
-      color: #1a0b2e !important;
+      color: #0e0518 !important;
       border: none;
-      font-weight: 600;
-      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-      transition: transform 0.2s, box-shadow 0.2s;
+      font-weight: 650;
+      box-shadow: 0 6px 14px rgba(212, 175, 55, 0.3);
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
     }
-    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4); }
-    
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 12px 22px var(--glow-gold); filter: brightness(1.08); }
     .btn-purple {
-      background-color: var(--purple-accent);
+      background: var(--purple-accent);
       color: white;
       border: none;
+      box-shadow: 0 4px 10px rgba(156, 39, 176, 0.4);
     }
-    .btn-purple:hover { background-color: #5e1687; color: white;}
+    .btn-purple:hover { background: #ab47bc; transform: translateY(-2px); box-shadow: 0 8px 18px #9c27b080; }
+    .btn-outline-gold {
+      border: 1.8px solid #d4af37;
+      color: #d4af37;
+      background: transparent;
+      font-weight: 600;
+    }
+    .btn-outline-gold:hover { background: #d4af3720; border-color: #f5d97a; color: #f5d97a; box-shadow: 0 0 14px #d4af3760; }
 
-    /* ========== Pastebin List Textarea Auto-Hide (核心: 文本折叠限制) ========== */
+    #urlList {
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-right: 2px;
+      min-height: 220px;
+      max-height: 52vh;
+    }
     #urlList .list-group-item {
       background: var(--list-item-bg) !important;
       border: 1px solid var(--card-border) !important;
-      border-radius: 8px !important;
-      margin-bottom: 1rem;
-      backdrop-filter: blur(5px);
+      border-radius: 14px !important;
+      margin-bottom: 0.9rem;
+      backdrop-filter: blur(14px);
+      padding: 0.9rem !important;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    /* 限制记事本回显文本的高度，超出显示滚动条，用户可自由拉伸 */
     #urlList textarea.form-control {
-      max-height: 350px;
+      max-height: 260px;
       min-height: 80px;
-      height: 120px; /* 默认折叠高度 */
-      resize: vertical; /* 允许垂直拉伸展开 */
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.85rem;
-      line-height: 1.5;
+      height: 100px;
+      resize: vertical;
+      font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8rem;
       margin-top: 10px;
-      border: 1px solid var(--card-border) !important;
-      border-radius: 6px !important;
+      border-radius: 12px !important;
+      background: var(--input-bg) !important;
+      color: var(--input-text) !important;
     }
-    
-    #urlList canvas { background: #fff; padding: 5px; border-radius: 5px; margin-top: 10px; }
 
-    /* ========== Theme Switch & Misc ========== */
-    .theme-switch {
-      position: absolute; top: 1.5rem; right: 1.5rem;
-      background: var(--card-bg); border: 1px solid var(--card-border);
-      color: var(--gold-accent); border-radius: 50%;
-      width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; z-index: 1000;
+    .list-action-btn {
+      border-radius: 30px !important;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-right: 4px;
+      transition: all 0.15s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
-    .logo-svg { width: 36px; height: 36px; margin-right: 12px; }
-    
-    footer { padding: 2rem 0; text-align: center; margin-top: auto;}
-    footer a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-family: monospace;}
-    footer a:hover { color: #d4af37; }
-    
-    /* Modal Theme */
-    .modal-content { background: var(--bg-color); color: var(--text-main); border: 1px solid var(--card-border); }
-    .modal-header { border-bottom: 1px solid var(--card-border); }
-    .modal-footer { border-top: 1px solid var(--card-border); }
+    .btn-danger.list-action-btn { background: #b52b3c; border: 1px solid #ff8a8a60; }
+    .btn-info.list-action-btn { background: #5e4b7a; border: 1px solid #d4af3780; color: #f0e4ff; }
+    .btn-info.list-action-btn:hover { background: #7b5fa0; }
+    .btn-danger.list-action-btn:hover { background: #c0394b; }
+
+    footer {
+      padding: 0.5rem 0 0.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      margin-top: 0.2rem;
+    }
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+    footer a:hover { color: #d4af37; text-shadow: 0 0 8px #d4af37; }
+
+    .modal-content {
+      background: var(--card-bg);
+      backdrop-filter: blur(35px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+    }
+    .modal-header, .modal-footer { border-color: var(--card-border); }
+
+    @media (max-width: 768px) {
+      .container { padding: 0.5rem 0.8rem !important; }
+      .app-title { font-size: 1.5rem; }
+      .theme-switch { width: 38px; height: 38px; top: 0.8rem; right: 0.8rem; }
+    }
+
+    #urlList::-webkit-scrollbar { width: 4px; }
+    #urlList::-webkit-scrollbar-thumb { background: #d4af37b0; border-radius: 20px; }
   </style>
 </head>
 
 <body>
-
-  <!-- Theme Toggle -->
-  <button class="theme-switch shadow-sm" onclick="toggleTheme()" title="Toggle Theme">
-    <i class="bi bi-moon-stars-fill" id="theme-icon" style="color: #d4af37;"></i>
+  <button class="theme-switch" onclick="toggleTheme()" title="Toggle theme">
+    <i class="bi bi-moon-stars-fill" id="theme-icon" style="color: #d4af37; font-size: 1.2rem;"></i>
   </button>
 
-  <div class="container py-4">
-    <!-- Header: Logo & Title -->
-    <div class="d-flex align-items-center justify-content-center mb-5">
-      <!-- Premium SVG Logo -->
-      <svg class="logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 4V3C8 2.44772 8.44772 2 9 2H15C15.5523 2 16 2.44772 16 3V4" stroke="url(#gold-grad)" stroke-width="2" stroke-linecap="round"/>
-        <path d="M4 6C4 4.89543 4.89543 4 6 4H18C19.1046 4 20 4.89543 20 6V20C20 21.1046 19.1046 22 18 22H6C4.89543 22 4 21.1046 4 20V6Z" stroke="url(#gold-grad)" stroke-width="2"/>
-        <path d="M9 10H15M9 14H15M9 18H12" stroke="#8e24aa" stroke-width="2" stroke-linecap="round"/>
-        <defs>
-          <linearGradient id="gold-grad" x1="4" y1="2" x2="20" y2="22" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#d4af37"/>
-            <stop offset="1" stop-color="#f9df9f"/>
-          </linearGradient>
-        </defs>
-      </svg>
-      <h2 class="fw-bold mb-0" style="background: var(--gold-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">RoyalPaste</h2>
+  <div class="container">
+    <div class="app-header">
+      <div class="logo-area">
+        <svg class="logo-svg" viewBox="0 0 24 24" fill="none">
+          <path d="M8 4V3C8 2.44772 8.44772 2 9 2H15C15.5523 2 16 2.44772 16 3V4" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M4 6C4 4.89543 4.89543 4 6 4H18C19.1046 4 20 4.89543 20 6V20C20 21.1046 19.1046 22 18 22H6C4.89543 22 4 21.1046 4 20V6Z" stroke="url(#goldGrad)" stroke-width="2"/>
+          <path d="M9 10H15M9 14H15M9 18H12" stroke="#ab47bc" stroke-width="2" stroke-linecap="round"/>
+          <defs><linearGradient id="goldGrad" x1="4" y1="2" x2="20" y2="22"><stop stop-color="#d4af37"/><stop offset="1" stop-color="#f9df9f"/></linearGradient></defs>
+        </svg>
+        <h2 class="app-title">RoyalPaste</h2>
+      </div>
     </div>
 
-    <!-- Symmetrical Layout: Left (Edit) & Right (Storage) -->
-    <div class="row g-4">
-      
-      <!-- Left Column: Operations -->
+    <div class="row g-3 align-items-stretch">
       <div class="col-lg-6">
-        
-        <!-- Search Card -->
         <div class="mac-card">
-          <div class="mac-card-header">
-            <div class="mac-dots"><span></span><span></span><span></span></div>
-            Search Snippet (Load 1 KV)
-          </div>
-          <div class="card-body p-4">
-            <label class="form-label small text-muted">Retrieve specific key</label>
+          <div class="mac-card-header"><div class="mac-dots"><span></span><span></span><span></span></div><i class="bi bi-search me-2" style="color:#d4af37;"></i> Retrieve Snippet (Load KV)</div>
+          <div class="card-body p-3">
             <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-search"></i></span>
+              <span class="input-group-text"><i class="bi bi-key"></i></span>
               <input type="text" class="form-control" placeholder="Enter snippet key..." id="keyForQuery">
-              <button class="btn btn-purple text-white px-4" type="button" onclick="query1KV()" id="qryBtn">Load</button>
+              <button class="btn btn-purple px-3" onclick="query1KV()"><i class="bi bi-cloud-download me-1"></i>Load</button>
             </div>
           </div>
         </div>
 
-        <!-- Editor Card -->
         <div class="mac-card">
-          <div class="mac-card-header">
-            <div class="mac-dots"><span></span><span></span><span></span></div>
-            New Paste
-          </div>
-          <div class="card-body p-4">
-            
-            <label class="form-label small text-muted">Content</label>
-            <div class="input-group mb-4 shadow-sm">
-              <textarea class="form-control font-monospace" rows="8" id="longURL" placeholder="Paste your text or code here..." oninput="loadUrlList()" style="resize: vertical;"></textarea>
+          <div class="mac-card-header"><div class="mac-dots"><span></span><span></span><span></span></div><i class="bi bi-pencil-square me-2" style="color:#d4af37;"></i> New Paste</div>
+          <div class="card-body p-3">
+            <label class="form-label fw-semibold small text-uppercase mb-1"><i class="bi bi-file-text me-1"></i>Content</label>
+            <div class="mb-3">
+              <textarea class="form-control font-monospace" rows="5" id="longURL" placeholder="Paste text, code or logs…" oninput="loadUrlList()" style="resize: vertical;"></textarea>
             </div>
 
-            <label class="form-label small text-muted">Settings</label>
-            <div class="input-group mb-3 shadow-sm">
-              <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
-              <input type="text" class="form-control" id="keyPhrase" placeholder="Custom Alias / Key (Optional)">
+            <label class="form-label fw-semibold small text-uppercase mb-1"><i class="bi bi-link-45deg me-1"></i>Custom Alias</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text"><i class="bi bi-tag"></i></span>
+              <input type="text" class="form-control" id="keyPhrase" placeholder="Optional alias">
+              <button class="btn btn-outline-gold" type="button" onclick="generateRandomAlias()" title="Generate 12-16 char alias"><i class="bi bi-shuffle"></i> Random</button>
             </div>
 
-            <div class="input-group mb-4 shadow-sm">
-              <span class="input-group-text"><i class="bi bi-shield-lock"></i></span>
-              <input class="form-control" type="password" value="__PASSWORD__" readonly="true" id="passwordText">
+            <label class="form-label fw-semibold small text-uppercase mb-1"><i class="bi bi-shield-lock-fill me-1"></i>Access Password (fixed)</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text"><i class="bi bi-lock"></i></span>
+              <input class="form-control" type="password" value="__PASSWORD__" id="passwordText" readonly>
               <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()"><i class="bi bi-eye"></i></button>
             </div>
 
             <div class="d-grid mt-2">
-              <button class="btn btn-gold btn-lg text-uppercase tracking-wide" type="button" onclick="shorturl()" id="addBtn">
-                <i class="bi bi-cloud-arrow-up-fill me-2"></i> Save Paste
-              </button>
-            </div>
-
-          </div>
-        </div>
-        
-      </div> <!-- End Left Column -->
-
-      <!-- Right Column: Storage List -->
-      <div class="col-lg-6">
-        <div class="mac-card h-100">
-          <div class="mac-card-header d-flex justify-content-between w-100">
-            <div class="d-flex align-items-center">
-              <div class="mac-dots"><span></span><span></span><span></span></div>
-              Local Storage History
+              <button class="btn btn-gold fw-bold" onclick="shorturl()" id="addBtn"><i class="bi bi-cloud-arrow-up-fill me-2"></i>Save Paste</button>
             </div>
           </div>
-          
-          <div class="card-body p-4 d-flex flex-column">
-            
-            <!-- Sync Controls -->
-            <div class="d-flex flex-wrap gap-2 mb-4">
-              <button class="btn btn-sm btn-outline-success flex-grow-1" type="button" onclick="loadUrlList()" id="loadListBtn">
-                <i class="bi bi-arrow-clockwise"></i> Local
-              </button>
-              <button class="btn btn-sm btn-outline-info flex-grow-1" type="button" onclick="loadKV()" id="loadKV2localStgBtn">
-                <i class="bi bi-cloud-download"></i> Sync KV
-              </button>
-              <button class="btn btn-sm btn-outline-danger flex-grow-1" type="button" onclick="clearLocalStorage()" id="clearlocalStgBtn">
-                <i class="bi bi-trash"></i> Clear
-              </button>
-            </div>
+        </div>
+      </div>
 
-            <!-- List Container (Dynamic render from main.js) -->
-            <div id="urlList" class="flex-grow-1" style="overflow-y: auto; overflow-x: hidden;">
-              <!-- Javascript injects items here -->
+      <div class="col-lg-6 d-flex">
+        <div class="mac-card w-100 d-flex flex-column">
+          <div class="mac-card-header"><div class="mac-dots"><span></span><span></span><span></span></div><i class="bi bi-archive me-2" style="color:#d4af37;"></i> Local History</div>
+          <div class="card-body p-3 d-flex flex-column flex-grow-1">
+            <div class="d-flex flex-wrap gap-2 mb-2">
+              <button class="btn btn-sm btn-outline-success flex-grow-1" onclick="loadUrlList()"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</button>
+              <button class="btn btn-sm btn-outline-info flex-grow-1" onclick="loadKV()"><i class="bi bi-cloud-download me-1"></i>Sync KV</button>
+              <button class="btn btn-sm btn-outline-danger flex-grow-1" onclick="clearLocalStorage()"><i class="bi bi-trash3 me-1"></i>Clear</button>
             </div>
-
+            <div id="urlList" class="flex-grow-1"></div>
           </div>
-        </div>
-      </div> <!-- End Right Column -->
-
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    <a href="https://github.com/crazypeace/Url-Shorten-Worker/" target="_blank">
-      <i class="bi bi-github fs-5 align-middle me-1"></i> Pastebin @ <span id="currentYear"></span>
-    </a>
-  </footer>
-
-  <!-- Result Modal -->
-  <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content mac-card border-0">
-        <div class="mac-card-header">
-          <div class="mac-dots"><span></span><span></span><span></span></div>
-          System Response
-        </div>
-        <div class="modal-body text-center py-4">
-          <div class="form-control font-monospace text-break fs-6 p-3" id="result" style="color: #d4af37 !important; border-color: rgba(212,175,55,0.4) !important;">No result</div>
-        </div>
-        <div class="modal-footer justify-content-center border-0 pb-4">
-          <button type="button" class="btn btn-gold px-4" onclick='copyurl("result")' data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Copied!">
-            <i class="bi bi-clipboard me-1"></i> Copy Link
-          </button>
-          <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
-  
-  <!-- Core Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/gh/lrsjng/jquery-qrcode@0.18.0/dist/jquery-qrcode.min.js" crossorigin="anonymous"></script>
 
-  <!-- Load Origin main.js unchanged -->
-  <script src="https://crazypeace.github.io/Url-Shorten-Worker/main.js" crossorigin="anonymous"></script>
+  <footer>
+    <a href="https://github.com/227575/Url-Shorten-Worker/" target="_blank"><i class="bi bi-github me-1"></i>RoyalPaste @<span id="currentYear"></span></a>
+  </footer>
 
-  <!-- Extends main.js for Pastebin behavior & UI scripts -->
+  <div class="modal fade" id="resultModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content mac-card border-0">
+        <div class="mac-card-header"><div class="mac-dots"><span></span><span></span><span></span></div><i class="bi bi-check2-circle me-2" style="color:#d4af37;"></i>System Response</div>
+        <div class="modal-body text-center py-3">
+          <div class="form-control font-monospace text-break p-2" id="result" style="color:#d4af37 !important; border-color:#d4af3760; background:var(--input-bg);">Awaiting action</div>
+        </div>
+        <div class="modal-footer justify-content-center border-0 pb-3">
+          <button class="btn btn-gold px-4" onclick='copyurl("result")' data-bs-toggle="popover" data-bs-content="Copied!"><i class="bi bi-clipboard me-1"></i>Copy</button>
+          <button class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/lrsjng/jquery-qrcode@0.18.0/dist/jquery-qrcode.min.js"></script>
+  <script src="https://227575.github.io/Url-Shorten-Worker/main.js"></script>
+
   <script>
-    // 1. Override main.js item builder for Pastebin Textarea Output
-    function buildValueTxtarea(longUrl) {
-      let valueTxt = document.createElement('textarea');
-      valueTxt.classList.add("form-control");
-      // Prevent browser default text spellcheck in code/paste
-      valueTxt.setAttribute("spellcheck", "false"); 
-      valueTxt.innerText = longUrl;
-      // Readonly until user clicks inside, avoiding accidental keystrokes
-      valueTxt.readOnly = true;
-      valueTxt.ondblclick = function() { this.readOnly = false; };
-      return valueTxt;
-    }
-    // Bind to the variable declared in main.js
-    buildValueItemFunc = buildValueTxtarea;
+    (function(){
+      window.buildValueItemFunc = function(longUrl) {
+        let ta = document.createElement('textarea');
+        ta.className = 'form-control';
+        ta.spellcheck = false;
+        ta.innerText = longUrl;
+        ta.readOnly = true;
+        ta.ondblclick = function(){ this.readOnly = false; this.focus(); };
+        return ta;
+      };
 
-    // 2. Theme & Password UI Logic
-    const initTheme = () => {
-      const saved = localStorage.getItem('royal_theme');
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const theme = saved || (prefersDark ? 'dark' : 'light');
-      document.documentElement.setAttribute('data-theme', theme);
-      updateThemeIcon(theme);
-    };
+      const originalAddUrlToList = window.addUrlToList;
+      window.addUrlToList = function(shortUrl, longUrl) {
+        originalAddUrlToList(shortUrl, longUrl);
+        const delBtn = document.getElementById('delBtn-' + shortUrl);
+        const qryBtn = document.getElementById('qryCntBtn-' + shortUrl);
+        const qrBtn = document.getElementById('qrcodeBtn-' + shortUrl);
+        if(delBtn) { delBtn.classList.add('list-action-btn', 'btn', 'btn-danger'); delBtn.innerHTML = '<i class="bi bi-x-lg"></i>'; }
+        if(qryBtn) { qryBtn.classList.add('list-action-btn', 'btn', 'btn-info'); qryBtn.innerHTML = '<i class="bi bi-question-lg"></i>'; }
+        if(qrBtn) { qrBtn.classList.add('list-action-btn', 'btn', 'btn-info'); qrBtn.innerHTML = '<i class="bi bi-qr-code"></i>'; }
+      };
 
-    const toggleTheme = () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      const target = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', target);
-      localStorage.setItem('royal_theme', target);
-      updateThemeIcon(target);
-    };
+      window.generateRandomAlias = function() {
+        const len = Math.floor(Math.random()*5)+12;
+        const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.";
+        let alias = '';
+        const arr = new Uint32Array(len);
+        crypto.getRandomValues(arr);
+        for(let i=0; i<len; i++) alias += chars[arr[i] % chars.length];
+        document.getElementById('keyPhrase').value = alias;
+      };
 
-    const updateThemeIcon = (theme) => {
-      const icon = document.getElementById('theme-icon');
-      if(theme === 'dark') {
-        icon.className = 'bi bi-sun-fill text-warning';
-      } else {
-        icon.className = 'bi bi-moon-stars-fill';
+      const initTheme = () => {
+        const saved = localStorage.getItem('royal_theme');
+        const prefers = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefers ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        updateIcon(theme);
+      };
+      window.toggleTheme = () => {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('royal_theme', next);
+        updateIcon(next);
+      };
+      function updateIcon(t) {
+        const icon = document.getElementById('theme-icon');
+        icon.className = t==='dark' ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
+        icon.style.color = '#d4af37';
       }
-    };
 
-    const togglePassword = () => {
-      const pwd = document.getElementById('passwordText');
-      pwd.type = pwd.type === 'password' ? 'text' : 'password';
-    };
+      window.togglePassword = () => {
+        const pwd = document.getElementById('passwordText');
+        pwd.type = pwd.type === 'password' ? 'text' : 'password';
+      };
 
-    // 3. Dynamic Footer Year
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
+      document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-    // Init Theme on Load
-    initTheme();
+      document.addEventListener('DOMContentLoaded', () => {
+        initTheme();
+        [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]')).forEach(el => new bootstrap.Popover(el, {trigger: 'focus'}));
+        if(window.loadUrlList) {
+          const originalLoad = window.loadUrlList;
+          window.loadUrlList = function() {
+            originalLoad();
+            document.querySelectorAll('#urlList .list-group-item').forEach(item => {
+              const btn = item.querySelector('[id^="delBtn-"]');
+              if(btn) {
+                const shortKey = btn.id.replace('delBtn-','');
+                const del = document.getElementById('delBtn-'+shortKey);
+                const qry = document.getElementById('qryCntBtn-'+shortKey);
+                const qr = document.getElementById('qrcodeBtn-'+shortKey);
+                if(del) { del.classList.add('list-action-btn','btn','btn-danger'); del.innerHTML='<i class="bi bi-x-lg"></i>'; }
+                if(qry) { qry.classList.add('list-action-btn','btn','btn-info'); qry.innerHTML='<i class="bi bi-question-lg"></i>'; }
+                if(qr) { qr.classList.add('list-action-btn','btn','btn-info'); qr.innerHTML='<i class="bi bi-qr-code"></i>'; }
+              }
+            });
+          };
+          window.loadUrlList();
+        }
+      });
+
+      if (typeof copyurl !== 'function') {
+        window.copyurl = (id) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          navigator.clipboard?.writeText(el.innerText || el.value).catch(() => prompt('Copy manually:', el.innerText));
+        };
+      }
+    })();
   </script>
 </body>
 </html>
