@@ -1,47 +1,45 @@
 <!doctype html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8" />
+  <meta http-equiv="content-type" content="txt/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Amethyst Glass - URL Shortener</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <title>Amethyst Shortener</title>
   
+  <!-- Bootstrap & Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
   <style>
-    /* ========== Design Tokens ========== */
+    /* ========== Design Tokens (Amethyst Glass) ========== */
     :root {
-      /* Light Theme */
-      --bg-color: #f8f6ff;
-      --mesh-1: radial-gradient(at 10% 20%, rgba(160, 116, 255, 0.4) 0px, transparent 50%);
-      --mesh-2: radial-gradient(at 90% 80%, rgba(212, 168, 255, 0.5) 0px, transparent 50%);
-      --glass-bg: rgba(255, 255, 255, 0.6);
+      --bg-color: #f4f0ff;
+      --mesh-1: radial-gradient(at 20% 30%, rgba(160, 116, 255, 0.35) 0px, transparent 50%);
+      --mesh-2: radial-gradient(at 80% 70%, rgba(212, 168, 255, 0.4) 0px, transparent 50%);
+      --glass-bg: rgba(255, 255, 255, 0.65);
       --glass-border: rgba(255, 255, 255, 0.5);
       --glass-shadow: 0 8px 32px 0 rgba(108, 43, 226, 0.1);
       --text-main: #2d2a38;
       --text-muted: #6b667a;
-      --input-bg: rgba(255, 255, 255, 0.8);
+      --input-bg: rgba(255, 255, 255, 0.7);
       --input-border: rgba(160, 116, 255, 0.3);
-      --btn-primary-bg: linear-gradient(135deg, #8a2be2, #ba55d3);
-      --btn-primary-hover: linear-gradient(135deg, #7a1fd1, #a944c2);
+      --item-bg: rgba(255, 255, 255, 0.5);
     }
 
     [data-theme="dark"] {
-      /* Dark Theme */
-      --bg-color: #0d0914;
-      --mesh-1: radial-gradient(at 10% 20%, rgba(90, 30, 160, 0.4) 0px, transparent 50%);
-      --mesh-2: radial-gradient(at 90% 80%, rgba(140, 50, 220, 0.3) 0px, transparent 50%);
-      --glass-bg: rgba(30, 20, 45, 0.5);
+      --bg-color: #0b0710;
+      --mesh-1: radial-gradient(at 20% 30%, rgba(90, 30, 160, 0.35) 0px, transparent 50%);
+      --mesh-2: radial-gradient(at 80% 70%, rgba(140, 50, 220, 0.25) 0px, transparent 50%);
+      --glass-bg: rgba(25, 18, 35, 0.55);
       --glass-border: rgba(255, 255, 255, 0.08);
-      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
       --text-main: #e8e6f2;
       --text-muted: #a09bab;
       --input-bg: rgba(0, 0, 0, 0.3);
       --input-border: rgba(160, 116, 255, 0.2);
-      --btn-primary-bg: linear-gradient(135deg, #6a1b9a, #8e24aa);
-      --btn-primary-hover: linear-gradient(135deg, #7b1fa2, #9c27b0);
+      --item-bg: rgba(0, 0, 0, 0.2);
     }
 
-    /* ========== Global & Mesh Background ========== */
+    /* ========== Global & Mesh ========== */
     body {
       background-color: var(--bg-color);
       background-image: var(--mesh-1), var(--mesh-2);
@@ -50,81 +48,91 @@
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       transition: background-color 0.5s ease, color 0.5s ease;
       min-height: 100vh;
-      position: relative;
+      display: flex;
+      flex-direction: column;
     }
-    
-    /* Background animation for Mesh */
     body::before {
       content: '';
-      position: absolute;
+      position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 60%);
-      animation: pulse 10s infinite alternate;
+      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 60%);
+      animation: pulse 8s infinite alternate;
       z-index: -1;
+      pointer-events: none;
     }
-    @keyframes pulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
+    @keyframes pulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.1); opacity: 1; } }
 
-    /* ========== Glassmorphism Components ========== */
+    /* ========== Glass Cards ========== */
     .glass-card {
       background: var(--glass-bg);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--glass-border);
       box-shadow: var(--glass-shadow);
-      border-radius: 1.25rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      overflow: hidden;
+      border-radius: 1rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
     }
-    .glass-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 40px 0 rgba(108, 43, 226, 0.2);
-    }
-    
-    .glass-header {
+    .glass-card .card-header {
       background: rgba(0,0,0,0.03);
       border-bottom: 1px solid var(--glass-border);
       color: var(--text-main);
       font-weight: 600;
-      padding: 1.25rem;
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+      padding: 1rem 1.25rem;
     }
 
+    /* ========== Forms & Inputs Overrides ========== */
     .form-control, .input-group-text {
-      background-color: var(--input-bg);
-      border: 1px solid var(--input-border);
-      color: var(--text-main);
+      background-color: var(--input-bg) !important;
+      border: 1px solid var(--input-border) !important;
+      color: var(--text-main) !important;
       backdrop-filter: blur(4px);
-      transition: all 0.3s ease;
     }
     .form-control:focus {
-      background-color: var(--input-bg);
-      color: var(--text-main);
-      border-color: #a074ff;
-      box-shadow: 0 0 0 0.25rem rgba(160, 116, 255, 0.25);
+      box-shadow: 0 0 0 0.25rem rgba(160, 116, 255, 0.25) !important;
+      border-color: #a074ff !important;
     }
-    .input-group-text { color: var(--text-muted); font-weight: 500; }
+    .input-group-text {
+      color: var(--text-muted) !important;
+    }
 
-    /* ========== Buttons ========== */
-    .btn-amethyst {
-      background: var(--btn-primary-bg);
-      border: none;
-      color: white;
-      font-weight: 600;
+    /* ========== Buttons Overrides ========== */
+    .btn-primary {
+      background: linear-gradient(135deg, #8a2be2, #ba55d3) !important;
+      border: none !important;
       box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
-      transition: all 0.3s;
     }
-    .btn-amethyst:hover { background: var(--btn-primary-hover); color: white; transform: scale(1.02); }
-    
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #7a1fd1, #a944c2) !important;
+      transform: translateY(-1px);
+    }
+
+    /* ========== Dynamic List Overrides (main.js generated) ========== */
     .list-group-item {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      color: var(--text-main);
-      margin-bottom: 0.5rem;
+      background: var(--item-bg) !important;
+      border: 1px solid var(--glass-border) !important;
       border-radius: 0.75rem !important;
+      color: var(--text-main) !important;
+      backdrop-filter: blur(8px);
+      margin-bottom: 1rem !important;
+    }
+    /* Fix for dynamically appended elements from main.js */
+    .list-group-item .form-control {
+      background-color: transparent !important;
+    }
+    .list-group-item canvas {
+      border-radius: 8px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding: 5px;
+      background: #fff; /* QR Code needs white bg */
     }
 
     /* ========== Theme Switcher ========== */
     .theme-switch {
-      position: absolute;
+      position: fixed;
       top: 1.5rem;
       right: 1.5rem;
       background: var(--glass-bg);
@@ -142,113 +150,144 @@
       transition: all 0.3s;
     }
     .theme-switch:hover { transform: rotate(15deg) scale(1.1); }
-    
-    /* Modal Override */
+
+    /* ========== Modal & Footer ========== */
     .modal-content { background: var(--bg-color); color: var(--text-main); border: 1px solid var(--glass-border); }
     .modal-header { border-bottom: 1px solid var(--glass-border); }
     .modal-footer { border-top: 1px solid var(--glass-border); }
+    
+    footer { margin-top: auto; padding: 1.5rem 0; text-align: center; }
+    footer a { color: var(--text-muted); text-decoration: none; transition: color 0.3s; font-weight: 500;}
+    footer a:hover { color: #a074ff; }
   </style>
 </head>
 <body>
 
-  <!-- Theme Toggle -->
+  <!-- Theme Toggle Button -->
   <button class="theme-switch shadow" onclick="toggleTheme()" title="Toggle Theme">
     <i class="bi bi-moon-stars-fill" id="theme-icon"></i>
   </button>
 
   <div class="container py-5">
+    <!-- Header Title -->
     <div class="text-center mb-5">
-      <h1 class="fw-bold" style="background: linear-gradient(135deg, #b084f5, #e0c3fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Amethyst Link</h1>
-      <p class="text-muted">High-performance URL Shortener via Cloudflare Edge</p>
+      <h2 class="fw-bold" style="background: linear-gradient(135deg, #b084f5, #e0c3fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        <i class="bi bi-link-45deg"></i> Amethyst URL
+      </h2>
+      <p class="text-muted small">Powered by Cloudflare Worker & KV</p>
     </div>
 
-    <div class="row g-4 justify-content-center">
+    <div class="row justify-content-center">
       <!-- Operation Card -->
-      <div class="col-lg-6 col-md-12">
-        <div class="glass-card h-100">
-          <div class="glass-header">
-            <i class="bi bi-link-45deg me-2"></i>Create Short URL
-          </div>
+      <div class="col-lg-10">
+        <div class="glass-card">
+          <div class="card-header"><i class="bi bi-magic me-2"></i>Create Short URL</div>
           <div class="card-body p-4">
+            
             <div class="input-group mb-4 shadow-sm">
-              <span class="input-group-text"><i class="bi bi-globe"></i></span>
-              <input type="text" class="form-control" id="longURL" placeholder="Paste your long URL here... e.g. https://example.com" oninput="loadUrlList()">
+              <span class="input-group-text" id="basic-addon1"><i class="bi bi-globe me-1"></i> Long URL</span>
+              <input type="text" class="form-control" id="longURL" aria-describedby="basic-addon1" placeholder="Example: https://example.com/" oninput="loadUrlList()">
             </div>
 
             <div class="input-group mb-4 shadow-sm">
-              <span class="input-group-text"><i class="bi bi-cursor-text"></i></span>
-              <input type="text" class="form-control" id="keyPhrase" placeholder="Custom alias (Optional)">
+              <span class="input-group-text" id="basic-addon2"><i class="bi bi-cursor-text me-1"></i> Custom Link</span>
+              <input type="text" class="form-control" id="keyPhrase" aria-describedby="basic-addon2" placeholder="As you wish (Optional)">
+            </div>
+
+            <!-- Query specific key (Bound to query1KV() in main.js) -->
+            <div class="input-group mb-4 shadow-sm">
+              <span class="input-group-text"><i class="bi bi-search me-1"></i> Query KV</span>
+              <input type="text" class="form-control" id="keyForQuery" placeholder="Query existed short link">
+              <button class="btn btn-secondary" type="button" onclick="query1KV()"><i class="bi bi-search"></i></button>
             </div>
 
             <div class="input-group mb-4 shadow-sm">
-              <span class="input-group-text"><i class="bi bi-key"></i></span>
-              <!-- Backend replaces __PASSWORD__ with actual config password -->
-              <input class="form-control text-muted" type="password" value="__PASSWORD__" readonly id="passwordText">
-              <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordView()"><i class="bi bi-eye"></i></button>
+              <span class="input-group-text" id="basic-addon3"><i class="bi bi-key me-1"></i> Password</span>
+              <input class="form-control" type="password" value="__PASSWORD__" readonly="true" id="passwordText" aria-describedby="basic-addon3">
+              <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()"><i class="bi bi-eye"></i></button>
             </div>
 
-            <div class="d-grid">
-              <button class="btn btn-amethyst btn-lg" type="button" onclick="shorturl()" id="addBtn">
-                <i class="bi bi-magic me-2"></i>Shorten URL
+            <div class="d-grid mt-2">
+              <button class="btn btn-primary btn-lg" type="button" onclick='shorturl()' id="addBtn">
+                <i class="bi bi-lightning-charge-fill me-1"></i> Shorten it
               </button>
             </div>
+
           </div>
         </div>
       </div>
 
-      <!-- Storage & History Card -->
-      <div class="col-lg-6 col-md-12">
-        <div class="glass-card h-100">
-          <div class="glass-header d-flex justify-content-between align-items-center">
-            <span><i class="bi bi-clock-history me-2"></i>Recent Links</span>
-            <span class="badge bg-primary rounded-pill bg-opacity-75" id="listCount">0</span>
+      <!-- Storage & List Card -->
+      <div class="col-lg-10">
+        <div class="glass-card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-hdd-stack me-2"></i>Storage Management</span>
           </div>
           <div class="card-body p-4">
-            <div class="d-flex gap-2 mb-4">
-              <button class="btn btn-sm btn-outline-success flex-grow-1" onclick="loadUrlList()"><i class="bi bi-arrow-clockwise"></i> Local</button>
-              <button class="btn btn-sm btn-outline-info flex-grow-1" onclick="loadKV()"><i class="bi bi-cloud-download"></i> KV Sync</button>
-              <button class="btn btn-sm btn-outline-danger flex-grow-1" onclick="clearLocalStorage()"><i class="bi bi-trash3"></i> Clear</button>
-            </div>
             
-            <div id="urlList" style="max-height: 250px; overflow-y: auto; overflow-x: hidden; padding-right: 5px;">
-              <!-- JS Injected List -->
+            <div class="d-flex flex-wrap gap-2 mb-4">
+              <button class="btn btn-success flex-grow-1" type="button" onclick='loadUrlList()' id="loadListBtn">
+                <i class="bi bi-arrow-clockwise"></i> Load Local
+              </button>
+              <button class="btn btn-info flex-grow-1 text-white" type="button" onclick='loadKV()' id="loadKV2localStgBtn">
+                <i class="bi bi-cloud-download"></i> Sync KV
+              </button>
+              <button class="btn btn-danger flex-grow-1" type="button" onclick='clearLocalStorage()' id="clearlocalStgBtn">
+                <i class="bi bi-trash3"></i> Clear Local
+              </button>
             </div>
+
+            <!-- main.js will render the list here -->
+            <div id="urlList"></div>
+
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Footer -->
+  <footer>
+    <a href="https://github.com/227575/Url-Shorten-Worker/" target="_blank">
+      <i class="bi bi-github fs-5 align-middle me-1"></i> Pastebin @ <span id="currentYear"></span>
+    </a>
+  </footer>
 
   <!-- Result Modal -->
-  <div class="modal fade" id="resultModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+  <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content glass-card">
         <div class="modal-header">
-          <h5 class="modal-title"><i class="bi bi-check2-circle text-success me-2"></i>Success</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title" id="resultModalLabel"><i class="bi bi-info-circle me-2 text-primary"></i>System Message</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body text-center">
-          <p class="text-muted mb-2">Your shortened URL is ready:</p>
-          <div class="form-control d-flex align-items-center justify-content-center p-3 mb-3 fs-5 font-monospace text-primary text-break" id="result">
-            No result
-          </div>
+        <div class="modal-body text-center py-4">
+          <div class="form-control text-primary font-monospace text-break fs-5 p-3" id="result">No result</div>
         </div>
         <div class="modal-footer justify-content-center">
-          <button type="button" class="btn btn-amethyst px-4" onclick="copyurl('result')">
-            <i class="bi bi-clipboard me-2"></i>Copy Link
+          <button type="button" class="btn btn-primary px-4" onclick='copyurl("result")' data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Copied!">
+            <i class="bi bi-clipboard me-1"></i> Copy
           </button>
+          <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   
-  <!-- Inline JS Logic to Ensure API Compatibility -->
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/gh/lrsjng/jquery-qrcode@0.18.0/dist/jquery-qrcode.min.js" crossorigin="anonymous"></script>
+
+  <!-- Load Origin main.js completely unchanged -->
+  <script src="https://227575.github.io/Url-Shorten-Worker/main.js" crossorigin="anonymous"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/gh/227575/Url-Shorten-Worker/main.js" crossorigin="anonymous"></script> -->
+
+  <!-- UI & Theme Add-on Script -->
   <script>
-    // ========== Theme Initialization & Logic ==========
+    // 1. Theme persistent logic
     const initTheme = () => {
-      const saved = localStorage.getItem('theme');
+      const saved = localStorage.getItem('amethyst_theme');
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       const theme = saved || (prefersDark ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', theme);
@@ -259,7 +298,7 @@
       const current = document.documentElement.getAttribute('data-theme');
       const target = current === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', target);
-      localStorage.setItem('theme', target);
+      localStorage.setItem('amethyst_theme', target);
       updateThemeIcon(target);
     };
 
@@ -271,164 +310,18 @@
         icon.className = 'bi bi-moon-stars-fill';
       }
     };
-    initTheme();
 
-    const togglePasswordView = () => {
+    // 2. Password toggle view logic
+    const togglePassword = () => {
       const pwd = document.getElementById('passwordText');
       pwd.type = pwd.type === 'password' ? 'text' : 'password';
-    }
+    };
 
-    // ========== API & Core Logic ==========
-    const API_URL = window.location.origin + '/';
-    let resultModal = new bootstrap.Modal(document.getElementById('resultModal'));
+    // 3. Set Footer Year
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-    // Send POST Request to backend API
-    async function fetchAPI(cmd, url = "", key = "") {
-      const password = document.getElementById("passwordText").value;
-      const payload = { cmd, url, key, password };
-      
-      try {
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-        return await response.json();
-      } catch (error) {
-        alert("API Error: " + error.message);
-        return { status: 500, error: error.message };
-      }
-    }
-
-    // Create Short URL
-    async function shorturl() {
-      const longURL = document.getElementById("longURL").value.trim();
-      const keyPhrase = document.getElementById("keyPhrase").value.trim();
-      
-      if (!longURL) { alert("Please enter a valid Long URL."); return; }
-      if (!longURL.startsWith("http://") && !longURL.startsWith("https://")) {
-        alert("URL must start with http:// or https://"); return;
-      }
-
-      document.getElementById("addBtn").disabled = true;
-      document.getElementById("addBtn").innerHTML = `<span class="spinner-border spinner-border-sm"></span> Processing...`;
-
-      const res = await fetchAPI("add", longURL, keyPhrase);
-      
-      if (res.status === 200) {
-        const finalUrl = API_URL + res.key;
-        document.getElementById("result").innerText = finalUrl;
-        resultModal.show();
-        saveToLocalStorage(res.key, longURL);
-        loadUrlList();
-        document.getElementById("keyPhrase").value = "";
-      } else {
-        alert(res.error || "Failed to create short link.");
-      }
-      
-      document.getElementById("addBtn").disabled = false;
-      document.getElementById("addBtn").innerHTML = `<i class="bi bi-magic me-2"></i>Shorten URL`;
-    }
-
-    // Delete from KV
-    async function deleteShortUrl(key) {
-      if (!confirm(`Are you sure you want to delete /${key} ?`)) return;
-      const res = await fetchAPI("del", "", key);
-      if (res.status === 200) {
-        removeFromLocalStorage(key);
-        loadUrlList();
-      } else {
-        alert(res.error || "Failed to delete.");
-      }
-    }
-
-    // Load KV Data (Admin)
-    async function loadKV() {
-      document.getElementById("urlList").innerHTML = `<div class="text-center p-3"><div class="spinner-border text-info" role="status"></div><p>Fetching from KV...</p></div>`;
-      const res = await fetchAPI("qryall");
-      
-      if (res.status === 200) {
-        localStorage.setItem("shortUrlList", JSON.stringify(res.kvlist));
-        loadUrlList();
-      } else {
-        alert(res.error || "Failed to sync KV. Check if load_kv is enabled in backend config.");
-        loadUrlList(); // Reload local on fail
-      }
-    }
-
-    // ========== LocalStorage Management ==========
-    function saveToLocalStorage(key, url) {
-      let list = JSON.parse(localStorage.getItem("shortUrlList") || "[]");
-      // Prevent duplicates
-      if (!list.some(item => item.key === key)) {
-        list.unshift({ key, value: url });
-        localStorage.setItem("shortUrlList", JSON.stringify(list));
-      }
-    }
-
-    function removeFromLocalStorage(key) {
-      let list = JSON.parse(localStorage.getItem("shortUrlList") || "[]");
-      list = list.filter(item => item.key !== key);
-      localStorage.setItem("shortUrlList", JSON.stringify(list));
-    }
-
-    function clearLocalStorage() {
-      if(confirm("Clear local display history? (Does not delete from KV database)")){
-        localStorage.removeItem("shortUrlList");
-        loadUrlList();
-      }
-    }
-
-    // Render History List
-    function loadUrlList() {
-      const listObj = document.getElementById("urlList");
-      let list = JSON.parse(localStorage.getItem("shortUrlList") || "[]");
-      
-      // Filter by Search (Long URL input acts as search)
-      const keyword = document.getElementById("longURL").value.toLowerCase();
-      if (keyword) {
-        list = list.filter(item => item.value.toLowerCase().includes(keyword) || item.key.toLowerCase().includes(keyword));
-      }
-
-      document.getElementById("listCount").innerText = list.length;
-
-      if (list.length === 0) {
-        listObj.innerHTML = `<div class="text-center text-muted p-4"><i class="bi bi-inbox fs-1"></i><p>No history found.</p></div>`;
-        return;
-      }
-
-      let html = "";
-      list.forEach(item => {
-        const shortLink = API_URL + item.key;
-        html += `
-          <div class="list-group-item p-3">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <span class="badge bg-primary bg-opacity-25 text-primary border border-primary px-2 py-1">/${item.key}</span>
-              <button class="btn btn-sm btn-outline-danger border-0" onclick="deleteShortUrl('${item.key}')" title="Delete"><i class="bi bi-trash"></i></button>
-            </div>
-            <div class="text-truncate small text-muted mb-2" title="${item.value}">${item.value}</div>
-            <div class="input-group input-group-sm">
-              <input type="text" class="form-control" value="${shortLink}" readonly id="link-${item.key}">
-              <button class="btn btn-outline-secondary" onclick="copyurl('link-${item.key}')"><i class="bi bi-clipboard"></i></button>
-            </div>
-          </div>`;
-      });
-      listObj.innerHTML = html;
-    }
-
-    // ========== Utilities ==========
-    function copyurl(id) {
-      let copyText = document.getElementById(id).innerText || document.getElementById(id).value;
-      navigator.clipboard.writeText(copyText).then(() => {
-        const btn = event.currentTarget;
-        const originalHtml = btn.innerHTML;
-        btn.innerHTML = `<i class="bi bi-check text-success"></i>`;
-        setTimeout(() => btn.innerHTML = originalHtml, 2000);
-      });
-    }
-
-    // Init on load
-    window.onload = loadUrlList;
+    // Run Init
+    initTheme();
   </script>
 </body>
 </html>
