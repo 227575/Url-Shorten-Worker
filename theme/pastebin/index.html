@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <style>
     :root {
-      --bg-gradient: radial-gradient(circle at 20% 20%, #1f0a2e 0%, #0a0312 100%);
+      --bg-gradient: linear-gradient(-45deg, #1f0a2e, #3a1445, #35210e, #101935, #170724);
       --card-bg: rgba(18, 8, 28, 0.75);
       --card-border: rgba(212, 175, 55, 0.3);
       --card-shadow: 0 16px 32px -8px #000000b0, 0 0 0 1px rgba(212, 175, 55, 0.15) inset;
@@ -27,7 +27,7 @@
     }
 
     [data-theme="light"] {
-      --bg-gradient: radial-gradient(circle at 20% 20%, #e8daf5 0%, #d6c0ec 100%);
+      --bg-gradient: linear-gradient(-45deg, #e8daf5, #f5d5e0, #fcebca, #d6e3f5, #dce0f5);
       --card-bg: rgba(255, 255, 255, 0.7);
       --card-border: rgba(139, 0, 200, 0.25);
       --card-shadow: 0 16px 30px -8px rgba(106, 27, 154, 0.25), 0 0 0 1px rgba(212, 175, 55, 0.2) inset;
@@ -43,9 +43,17 @@
       --glow-gold: rgba(184, 134, 11, 0.3);
     }
 
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     * { transition: background-color 0.3s ease, border-color 0.2s; }
     body {
       background: var(--bg-gradient);
+      background-size: 300% 300%;
+      animation: gradientShift 18s ease infinite;
       color: var(--text-main);
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
       min-height: 100vh;
@@ -67,67 +75,33 @@
       max-width: 1400px;
     }
 
-    .app-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 0.6rem;
-      padding: 0 0.25rem;
-    }
+    .app-header { display: flex; align-items: center; margin-bottom: 0.6rem; padding: 0 0.25rem; }
     .logo-area { display: flex; align-items: center; gap: 10px; }
     .logo-svg { width: 34px; height: 34px; filter: drop-shadow(0 4px 6px #d4af3740); }
     .app-title {
-      font-weight: 700;
-      font-size: 1.7rem;
-      letter-spacing: -0.02em;
-      background: var(--gold-accent);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 0;
-      line-height: 1.2;
+      font-weight: 700; font-size: 1.7rem; letter-spacing: -0.02em; margin: 0; line-height: 1.2;
+      background: var(--gold-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
 
     .theme-switch {
-      position: fixed;
-      top: 1rem; right: 1.2rem;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(12px);
-      color: #d4af37;
-      border-radius: 40px;
-      width: 42px; height: 42px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      z-index: 1000;
-      box-shadow: 0 6px 14px #00000030;
-      transition: 0.2s;
+      position: fixed; top: 1rem; right: 1.2rem;
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px); color: #d4af37; border-radius: 40px;
+      width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 1000; box-shadow: 0 6px 14px #00000030; transition: 0.2s;
     }
     .theme-switch:hover { transform: scale(1.08); box-shadow: 0 0 22px var(--glow-gold); }
 
     .mac-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      box-shadow: var(--card-shadow);
-      margin-bottom: 1rem;
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.3s;
+      background: var(--card-bg); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--card-border); border-radius: 18px; box-shadow: var(--card-shadow);
+      margin-bottom: 1rem; overflow: hidden; transition: transform 0.2s, box-shadow 0.3s;
     }
-    .mac-card:hover {
-      box-shadow: 0 22px 38px -10px #000000cc, 0 0 0 1.5px var(--glow-gold) inset;
-      transform: translateY(-2px);
-    }
+    .mac-card:hover { box-shadow: 0 22px 38px -10px #000000cc, 0 0 0 1.5px var(--glow-gold) inset; transform: translateY(-2px); }
 
     .mac-card-header {
-      background: var(--mac-header-bg);
-      border-bottom: 1px solid var(--card-border);
-      padding: 0.5rem 1.2rem;
-      display: flex;
-      align-items: center;
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: var(--text-main);
+      background: var(--mac-header-bg); border-bottom: 1px solid var(--card-border);
+      padding: 0.5rem 1.2rem; display: flex; align-items: center; font-weight: 600; font-size: 0.9rem; color: var(--text-main);
     }
     .mac-dots { display: flex; gap: 7px; margin-right: 15px; }
     .mac-dots span { width: 11px; height: 11px; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
@@ -135,143 +109,70 @@
     .mac-dots span:nth-child(2) { background: #ffbd2e; }
     .mac-dots span:nth-child(3) { background: #27c93f; }
 
-    .input-group {
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .input-group-text,
-    .input-group .form-control,
-    .input-group .btn {
-      border-radius: 0 !important;
-      border: 1px solid var(--input-border);
-    }
-    .input-group-text {
-      background: rgba(100, 30, 140, 0.08) !important;
-      border-right: none !important;
-      color: var(--text-muted) !important;
-    }
-    .input-group .form-control {
-      background: var(--input-bg) !important;
-      color: var(--input-text) !important;
-      border-left: none !important;
-      border-right: none !important;
-    }
-    .input-group .btn {
-      border-left: none !important;
-    }
-    .form-control:focus {
-      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25) !important;
-      border-color: #d4af37 !important;
-    }
+    .input-group { border-radius: 14px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .input-group-text, .input-group .form-control, .input-group .btn { border-radius: 0 !important; border: 1px solid var(--input-border); }
+    .input-group-text { background: rgba(100, 30, 140, 0.08) !important; border-right: none !important; color: var(--text-muted) !important; }
+    .input-group .form-control { background: var(--input-bg) !important; color: var(--input-text) !important; border-left: none !important; border-right: none !important; }
+    .input-group .btn { border-left: none !important; }
+    .form-control:focus { box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25) !important; border-color: #d4af37 !important; }
 
-    .btn-gold {
-      background: var(--gold-accent);
-      color: #0e0518 !important;
-      border: none;
-      font-weight: 650;
-      box-shadow: 0 6px 14px rgba(212, 175, 55, 0.3);
-      padding: 0.5rem 1rem;
-      font-size: 0.95rem;
-    }
+    .btn-gold { background: var(--gold-accent); color: #0e0518 !important; border: none; font-weight: 650; box-shadow: 0 6px 14px rgba(212, 175, 55, 0.3); padding: 0.5rem 1rem; font-size: 0.95rem; }
     .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 12px 22px var(--glow-gold); filter: brightness(1.08); }
-    .btn-purple {
-      background: var(--purple-accent);
-      color: white;
-      border: none;
-      box-shadow: 0 4px 10px rgba(156, 39, 176, 0.4);
-    }
+    .btn-purple { background: var(--purple-accent); color: white; border: none; box-shadow: 0 4px 10px rgba(156, 39, 176, 0.4); }
     .btn-purple:hover { background: #ab47bc; transform: translateY(-2px); box-shadow: 0 8px 18px #9c27b080; }
-    .btn-outline-gold {
-      border: 1.8px solid #d4af37;
-      color: #d4af37;
-      background: transparent;
-      font-weight: 600;
-    }
+    .btn-outline-gold { border: 1.8px solid #d4af37; color: #d4af37; background: transparent; font-weight: 600; }
     .btn-outline-gold:hover { background: #d4af3720; border-color: #f5d97a; color: #f5d97a; box-shadow: 0 0 14px #d4af3760; }
 
-    #urlList {
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding-right: 2px;
-      min-height: 220px;
-      max-height: 66vh;
-    }
+    #urlList { overflow-y: auto; overflow-x: hidden; padding-right: 4px; min-height: 220px; max-height: 66vh; }
     #urlList .list-group-item {
-      background: var(--list-item-bg) !important;
-      border: 1px solid var(--card-border) !important;
-      border-radius: 14px !important;
-      margin-bottom: 0.9rem;
-      backdrop-filter: blur(14px);
-      padding: 0.9rem !important;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background: var(--list-item-bg) !important; border: 1px solid var(--card-border) !important; border-radius: 14px !important;
+      margin-bottom: 0.9rem; backdrop-filter: blur(14px); padding: 0.9rem !important; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    
+    .content-single-line {
+      height: 38px !important; min-height: 38px !important;
+      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis;
+      resize: none !important; cursor: pointer; transition: all 0.3s ease;
+    }
+    .content-single-line:hover { box-shadow: 0 0 0 1px var(--glow-gold) inset; border-color: #d4af37; }
+    .content-expanded {
+      min-height: 80px !important; height: 120px; max-height: 260px;
+      resize: vertical !important; white-space: pre !important; overflow-x: auto !important;
+      transition: all 0.3s ease;
     }
     #urlList textarea.form-control {
-      max-height: 260px;
-      min-height: 80px;
-      height: 100px;
-      resize: vertical;
-      font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
-      font-size: 0.8rem;
-      margin-top: 10px;
-      border-radius: 12px !important;
-      background: var(--input-bg) !important;
-      color: var(--input-text) !important;
+      font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace; font-size: 0.8rem;
+      margin-top: 8px; border-radius: 10px !important; background: var(--input-bg) !important; color: var(--input-text) !important;
     }
+
+    #urlList textarea::-webkit-scrollbar { height: 6px; width: 6px; }
+    #urlList textarea::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 10px; }
+    #urlList textarea::-webkit-scrollbar-thumb { background: #d4af3780; border-radius: 10px; }
 
     .list-action-btn {
-      border-radius: 30px !important;
-      padding: 0.2rem 0.7rem;
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-right: 4px;
-      transition: all 0.15s;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      border-radius: 8px !important; padding: 0.3rem 0.55rem; font-size: 0.85rem;
+      margin-left: 4px; transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      display: inline-flex; align-items: center; justify-content: center;
     }
-    .btn-danger.list-action-btn { background: #b52b3c; border: 1px solid #ff8a8a60; }
-    .btn-info.list-action-btn { background: #5e4b7a; border: 1px solid #d4af3780; color: #f0e4ff; }
-    .btn-info.list-action-btn:hover { background: #7b5fa0; }
+    .btn-danger.list-action-btn { background: rgba(181, 43, 60, 0.9); border: 1px solid #ff8a8a60; color: #fff; }
     .btn-danger.list-action-btn:hover { background: #c0394b; }
+    .btn-info.list-action-btn { background: rgba(94, 75, 122, 0.9); border: 1px solid #d4af3780; color: #f0e4ff; }
+    .btn-info.list-action-btn:hover { background: #7b5fa0; color: #fff; }
+    .btn-outline-gold.list-action-btn { border: 1px solid #d4af37; color: #d4af37; background: rgba(212, 175, 55, 0.05); }
+    .btn-outline-gold.list-action-btn:hover { background: rgba(212, 175, 55, 0.2); color: #f9df9f; }
+    .btn-outline-secondary.list-action-btn { border: 1px solid var(--text-muted); color: var(--text-main); }
+    .btn-outline-secondary.list-action-btn:hover { background: rgba(255,255,255,0.1); }
 
     .alias-display {
-      font-family: monospace;
-      font-weight: 600;
-      color: #d4af37;
-      background: rgba(0,0,0,0.1);
-      padding: 0.25rem 0.75rem;
-      border-radius: 30px;
-      font-size: 0.9rem;
-    }
-    .content-toolbar {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 6px;
-    }
-    .content-toolbar .btn-sm {
-      padding: 0.2rem 0.6rem;
-      font-size: 0.75rem;
+      font-family: monospace; font-weight: 700; color: #f9df9f; background: rgba(0,0,0,0.2);
+      padding: 0.3rem 0.75rem; border-radius: 30px; font-size: 0.95rem; border: 1px solid rgba(212, 175, 55, 0.15);
     }
 
-    footer {
-      padding: 0.5rem 0 0.5rem;
-      text-align: center;
-      font-size: 0.8rem;
-      margin-top: 0.2rem;
-    }
-    footer a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-weight: 500;
-      letter-spacing: 0.3px;
-    }
+    footer { padding: 0.5rem 0 0.5rem; text-align: center; font-size: 0.8rem; margin-top: 0.2rem; }
+    footer a { color: var(--text-muted); text-decoration: none; font-weight: 500; letter-spacing: 0.3px; transition: 0.3s; }
     footer a:hover { color: #d4af37; text-shadow: 0 0 8px #d4af37; }
 
-    .modal-content {
-      background: var(--card-bg);
-      backdrop-filter: blur(35px);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-    }
+    .modal-content { background: var(--card-bg); backdrop-filter: blur(35px); border: 1px solid var(--card-border); border-radius: 24px; }
     .modal-header, .modal-footer { border-color: var(--card-border); }
 
     @media (max-width: 768px) {
@@ -306,7 +207,7 @@
     <div class="row g-3 align-items-stretch">
       <div class="col-lg-6">
         <div class="mac-card">
-          <div class="mac-card-header"><div class="mac-dots"><span></span><span></span><span></span></div><i class="bi bi-search me-2" style="color:#d4af37;"></i> Retrieve Snippet (Load KV)</div>
+          <div class="mac-card-header"><div class="mac-dots"><span></span><span></span><span></span></div><i class="bi bi-search me-2" style="color:#d4af37;"></i> Retrieve Snippet</div>
           <div class="card-body p-3">
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-key"></i></span>
@@ -328,7 +229,7 @@
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi bi-tag"></i></span>
               <input type="text" class="form-control" id="keyPhrase" placeholder="Optional alias">
-              <button class="btn btn-outline-gold" type="button" onclick="generateRandomAlias()" title="Generate 16-32 char alias"><i class="bi bi-shuffle"></i> Random</button>
+              <button class="btn btn-outline-gold" type="button" onclick="generateRandomAlias()" title="Generate Random"><i class="bi bi-shuffle"></i></button>
             </div>
 
             <label class="form-label fw-semibold small text-uppercase mb-1"><i class="bi bi-shield-lock-fill me-1"></i>Access Password</label>
@@ -351,7 +252,7 @@
           <div class="card-body p-3 d-flex flex-column flex-grow-1" style="min-height:0;">
             <div class="d-flex flex-wrap gap-2 mb-2">
               <button class="btn btn-sm btn-outline-success flex-grow-1" onclick="loadUrlList()"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</button>
-              <button class="btn btn-sm btn-outline-info flex-grow-1" onclick="loadKV()"><i class="bi bi-cloud-download me-1"></i>Sync KV</button>
+              <button class="btn btn-sm btn-outline-info flex-grow-1" onclick="loadKV()"><i class="bi bi-cloud-download me-1"></i>Sync</button>
               <button class="btn btn-sm btn-outline-danger flex-grow-1" onclick="clearLocalStorage()"><i class="bi bi-trash3 me-1"></i>Clear</button>
             </div>
             <div id="urlList" class="flex-grow-1"></div>
@@ -373,7 +274,7 @@
           <div class="form-control font-monospace text-break p-2" id="result" style="color:#d4af37 !important; border-color:#d4af3760; background:var(--input-bg);">Awaiting action</div>
         </div>
         <div class="modal-footer justify-content-center border-0 pb-3">
-          <button class="btn btn-gold px-4" onclick='copyurl("result")' data-bs-toggle="popover" data-bs-content="Copied!"><i class="bi bi-clipboard me-1"></i>Copy</button>
+          <button class="btn btn-gold px-4" onclick='copyurl("result")' data-bs-toggle="popover" data-bs-content="Copied!"><i class="bi bi-clipboard me-1"></i>Copy Result</button>
           <button class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
@@ -387,56 +288,6 @@
 
   <script>
     (function(){
-      window.buildValueItemFunc = function(longUrl) {
-        const container = document.createElement('div');
-        container.style.marginTop = '10px';
-        
-        const toolbar = document.createElement('div');
-        toolbar.className = 'content-toolbar';
-        
-        const toggleBtn = document.createElement('button');
-        toggleBtn.className = 'btn btn-sm btn-outline-secondary';
-        toggleBtn.innerHTML = '<i class="bi bi-arrows-expand"></i> Expand';
-        toggleBtn.onclick = function(e) {
-          e.stopPropagation();
-          const ta = container.querySelector('textarea');
-          if (ta.style.height === '100px' || ta.style.height === '') {
-            ta.style.height = 'auto';
-            ta.style.height = (ta.scrollHeight + 20) + 'px';
-            toggleBtn.innerHTML = '<i class="bi bi-arrows-collapse"></i> Collapse';
-          } else {
-            ta.style.height = '100px';
-            toggleBtn.innerHTML = '<i class="bi bi-arrows-expand"></i> Expand';
-          }
-        };
-        
-        const copyBtn = document.createElement('button');
-        copyBtn.className = 'btn btn-sm btn-outline-gold';
-        copyBtn.innerHTML = '<i class="bi bi-clipboard"></i> Copy';
-        copyBtn.onclick = function(e) {
-          e.stopPropagation();
-          const ta = container.querySelector('textarea');
-          navigator.clipboard?.writeText(ta.value).then(() => {
-            copyBtn.innerHTML = '<i class="bi bi-check-lg"></i> Copied';
-            setTimeout(() => copyBtn.innerHTML = '<i class="bi bi-clipboard"></i> Copy', 1500);
-          }).catch(() => prompt('Copy manually:', ta.value));
-        };
-        
-        toolbar.appendChild(toggleBtn);
-        toolbar.appendChild(copyBtn);
-        container.appendChild(toolbar);
-        
-        let ta = document.createElement('textarea');
-        ta.className = 'form-control';
-        ta.spellcheck = false;
-        ta.value = longUrl;
-        ta.readOnly = true;
-        ta.style.height = '100px';
-        ta.ondblclick = function(){ this.readOnly = false; this.focus(); };
-        container.appendChild(ta);
-        return container;
-      };
-
       const originalAddUrlToList = window.addUrlToList;
       window.addUrlToList = function(shortUrl, longUrl) {
         let urlList = document.querySelector("#urlList");
@@ -444,60 +295,109 @@
         child.classList.add("list-group-item");
         
         let keyItem = document.createElement('div');
-        keyItem.classList.add("d-flex", "align-items-center", "gap-1", "flex-wrap");
-        
-        let delBtn = document.createElement('button');
-        delBtn.setAttribute('type', 'button');
-        delBtn.classList.add('list-action-btn', 'btn', 'btn-danger');
-        delBtn.setAttribute('onclick', 'deleteShortUrl(\"' + shortUrl + '\")');
-        delBtn.setAttribute('id', 'delBtn-' + shortUrl);
-        delBtn.innerHTML = '<i class="bi bi-x-lg"></i>';
-        keyItem.appendChild(delBtn);
-        
-        let qryCntBtn = document.createElement('button');
-        qryCntBtn.setAttribute('type', 'button');
-        qryCntBtn.classList.add('list-action-btn', 'btn', 'btn-info');
-        qryCntBtn.setAttribute('onclick', 'queryVisitCount(\"' + shortUrl + '\")');
-        qryCntBtn.setAttribute('id', 'qryCntBtn-' + shortUrl);
-        qryCntBtn.innerHTML = '<i class="bi bi-question-lg"></i>';
-        keyItem.appendChild(qryCntBtn);
+        keyItem.classList.add("d-flex", "align-items-center", "flex-wrap", "mb-1");
         
         let aliasSpan = document.createElement('span');
-        aliasSpan.className = 'alias-display';
+        aliasSpan.className = 'alias-display me-auto';
         aliasSpan.innerText = shortUrl;
-        aliasSpan.style.flex = '1';
-        aliasSpan.style.minWidth = '120px';
         keyItem.appendChild(aliasSpan);
         
+        // --- BUTTONS (Pure Icons, Right-aligned) ---
+
+        // Expand Button
+        let expandBtn = document.createElement('button');
+        expandBtn.className = 'btn btn-outline-secondary list-action-btn';
+        expandBtn.title = 'Expand/Collapse';
+        expandBtn.innerHTML = '<i class="bi bi-arrows-expand"></i>';
+        
+        // Link Copy Button
         let copyLinkBtn = document.createElement('button');
-        copyLinkBtn.className = 'btn btn-sm btn-outline-gold';
-        copyLinkBtn.innerHTML = '<i class="bi bi-link-45deg"></i> Copy URL';
+        copyLinkBtn.className = 'btn btn-outline-gold list-action-btn';
+        copyLinkBtn.title = 'Copy Link';
+        copyLinkBtn.innerHTML = '<i class="bi bi-link-45deg"></i>';
         copyLinkBtn.onclick = function(e) {
           e.stopPropagation();
           const fullUrl = window.location.protocol + "//" + window.location.host + "/" + shortUrl;
           navigator.clipboard?.writeText(fullUrl).then(() => {
-            copyLinkBtn.innerHTML = '<i class="bi bi-check-lg"></i> Copied';
-            setTimeout(() => copyLinkBtn.innerHTML = '<i class="bi bi-link-45deg"></i> Copy URL', 1500);
-          }).catch(() => prompt('Copy manually:', fullUrl));
+            copyLinkBtn.innerHTML = '<i class="bi bi-check-lg"></i>';
+            setTimeout(() => copyLinkBtn.innerHTML = '<i class="bi bi-link-45deg"></i>', 1500);
+          });
         };
-        keyItem.appendChild(copyLinkBtn);
+
+        // Content Copy Button
+        let copyContentBtn = document.createElement('button');
+        copyContentBtn.className = 'btn btn-outline-info list-action-btn';
+        copyContentBtn.title = 'Copy Content';
+        copyContentBtn.innerHTML = '<i class="bi bi-clipboard-data"></i>';
+        copyContentBtn.onclick = function(e) {
+          e.stopPropagation();
+          navigator.clipboard?.writeText(longUrl).then(() => {
+            copyContentBtn.innerHTML = '<i class="bi bi-check-lg"></i>';
+            setTimeout(() => copyContentBtn.innerHTML = '<i class="bi bi-clipboard-data"></i>', 1500);
+          });
+        };
         
+        // Stats Button
+        let qryCntBtn = document.createElement('button');
+        qryCntBtn.setAttribute('type', 'button');
+        qryCntBtn.className = 'btn btn-info list-action-btn';
+        qryCntBtn.title = 'Stats';
+        qryCntBtn.setAttribute('onclick', 'queryVisitCount(\"' + shortUrl + '\")');
+        qryCntBtn.innerHTML = '<i class="bi bi-bar-chart-line"></i>';
+        
+        // QR Code Button
         let qrcodeBtn = document.createElement('button');
         qrcodeBtn.setAttribute('type', 'button');
-        qrcodeBtn.classList.add('list-action-btn', 'btn', 'btn-info');
+        qrcodeBtn.className = 'btn btn-info list-action-btn';
+        qrcodeBtn.title = 'QR Code';
         qrcodeBtn.setAttribute('onclick', 'buildQrcode(\"' + shortUrl + '\")');
-        qrcodeBtn.setAttribute('id', 'qrcodeBtn-' + shortUrl);
         qrcodeBtn.innerHTML = '<i class="bi bi-qr-code"></i>';
-        keyItem.appendChild(qrcodeBtn);
         
+        // Delete Button
+        let delBtn = document.createElement('button');
+        delBtn.setAttribute('type', 'button');
+        delBtn.className = 'btn btn-danger list-action-btn';
+        delBtn.title = 'Delete';
+        delBtn.setAttribute('onclick', 'deleteShortUrl(\"' + shortUrl + '\")');
+        delBtn.innerHTML = '<i class="bi bi-trash3"></i>';
+        
+        // Append all buttons
+        [expandBtn, copyLinkBtn, copyContentBtn, qryCntBtn, qrcodeBtn, delBtn].forEach(b => keyItem.appendChild(b));
         child.appendChild(keyItem);
-        
+
+        // QR Code Container
         let qrcodeItem = document.createElement('div');
         qrcodeItem.setAttribute('id', 'qrcode-' + shortUrl);
         child.appendChild(qrcodeItem);
         
-        child.appendChild(buildValueItemFunc(longUrl));
+        // Content Textarea (Click to Expand logic)
+        let ta = document.createElement('textarea');
+        ta.className = 'form-control content-single-line';
+        ta.spellcheck = false;
+        ta.value = longUrl;
+        ta.readOnly = true;
+        ta.setAttribute('wrap', 'off');
+        ta.title = 'Click to expand content';
         
+        const toggleContent = (e) => {
+          if(e) e.stopPropagation();
+          if (ta.classList.contains('content-single-line')) {
+            ta.classList.remove('content-single-line');
+            ta.classList.add('content-expanded');
+            ta.readOnly = false;
+            expandBtn.innerHTML = '<i class="bi bi-arrows-collapse"></i>';
+          } else {
+            ta.classList.add('content-single-line');
+            ta.classList.remove('content-expanded');
+            ta.readOnly = true;
+            expandBtn.innerHTML = '<i class="bi bi-arrows-expand"></i>';
+          }
+        };
+
+        expandBtn.onclick = toggleContent;
+        ta.onclick = function(e) { if(this.classList.contains('content-single-line')) toggleContent(e); };
+        
+        child.appendChild(ta);
         urlList.append(child);
       };
 
@@ -518,6 +418,7 @@
         document.documentElement.setAttribute('data-theme', theme);
         updateIcon(theme);
       };
+      
       window.toggleTheme = () => {
         const cur = document.documentElement.getAttribute('data-theme');
         const next = cur === 'dark' ? 'light' : 'dark';
@@ -525,6 +426,7 @@
         localStorage.setItem('royal_theme', next);
         updateIcon(next);
       };
+      
       function updateIcon(t) {
         const icon = document.getElementById('theme-icon');
         icon.className = t==='dark' ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
